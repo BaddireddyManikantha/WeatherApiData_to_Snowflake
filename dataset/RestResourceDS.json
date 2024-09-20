@@ -1,0 +1,23 @@
+{
+	"name": "RestResourceDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestServiceLS",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"city": {
+					"value": "@dataset().city",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"city": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
