@@ -1,0 +1,20 @@
+{
+	"name": "RestServiceLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"city": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "@{concat('https://api.openweathermap.org/data/2.5/forecast?q=',linkedService().city,'&','appid=af289f55c208e29ce42b959fa28c1b43')}",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Basic",
+			"userName": "manibaddireddy7571@gmail.com",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEE1Qjk0NDM2LTFEMjEtNDFFNy1BODM1LTBCMzIxOThCRDk4MV85MWFiZTBiYS1kMjExLTRlYjEtOGJjOS1mOWUzODBkMzQ4YTkiDQp9"
+		}
+	}
+}
