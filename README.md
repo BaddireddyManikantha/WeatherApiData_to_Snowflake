@@ -13,3 +13,7 @@ This Azure Data Project is designed to extract data from an external API, transf
   - Azure Data Lake
   - Log Analyitics
   - Key Vault
+### Dataset
+The data provided is a comprehensive weather dataset that includes various meteorological parameters such as temperature, longitude, latitude, wind speed, and direction. This information can be used to analyze and understand the weather patterns and conditions in a specific region
+
+***Data Source*** : https://openweathermap.org/
