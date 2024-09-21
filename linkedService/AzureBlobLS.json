@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"connectionString": "DefaultEndpointsProtocol=https;AccountName=stagging7571;EndpointSuffix=core.windows.net;",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEE1Qjk0NDM2LTFEMjEtNDFFNy1BODM1LTBCMzIxOThCRDk4MV9iYmE2MGViYy01NTVhLTRmZGItYWUwNy1jZGNjODdkNGRjYTgiDQp9"
+			"sasUri": "https://stagging7571.blob.core.windows.net/stage/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEE1Qjk0NDM2LTFEMjEtNDFFNy1BODM1LTBCMzIxOThCRDk4MV9lOTAwNWEyNC0yZTJlLTRhZjYtOTk5ZC1hMjA1NmQ0YzQxMGQiDQp9"
 		}
 	}
 }
