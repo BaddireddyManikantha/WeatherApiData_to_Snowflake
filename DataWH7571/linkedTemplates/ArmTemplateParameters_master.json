@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DataWH7571"
+		},
+		"AzureDataLakeStorageLS_accountKey": {
+			"value": ""
+		},
+		"RestServiceLS_password": {
+			"value": ""
+		},
+		"AzureBlobLS_sasUri": {
+			"value": ""
+		},
+		"AzureDataLakeStorageLS_properties_typeProperties_url": {
+			"value": "https://store7571.dfs.core.windows.net/"
+		},
+		"AzureDatabricksLS_properties_typeProperties_existingClusterId": {
+			"value": "0912-060534-fpkax81v"
+		},
+		"AzureKeyVaultLS_properties_typeProperties_baseUrl": {
+			"value": "https://storecredits7571.vault.azure.net/"
+		},
+		"RestServiceLS_properties_typeProperties_url": {
+			"value": "@{concat('https://api.openweathermap.org/data/2.5/forecast?q=',linkedService().city,'&','appid=af289f55c208e29ce42b959fa28c1b43')}"
+		},
+		"RestServiceLS_properties_typeProperties_userName": {
+			"value": "manibaddireddy7571@gmail.com"
+		},
+		"SnowflakeBlobLS_sasUri": {
+			"value": ""
+		},
+		"SnowflakeLS_properties_typeProperties_database": {
+			"value": "weather_db"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
