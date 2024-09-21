@@ -74,6 +74,188 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "data cleaning",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "loop every city",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/grandhikrishnaprasad@gmail.com/weather data"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksLS",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "adls to snowflake",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "data cleaning",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.parquet",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SnowflakeV2Sink",
+						"importSettings": {
+							"type": "SnowflakeImportCopyCommand"
+						}
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "SnowflakeBlobLS",
+							"type": "LinkedServiceReference"
+						},
+						"path": "stagging"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "lat",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LAT",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "lon",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LON",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "country",
+									"type": "String"
+								},
+								"sink": {
+									"name": "COUNTRY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "id",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "ID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "population",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "POPULATION",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "sunrise",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "SUNRISE",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "sunset",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "SUNSET",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "timezone",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "TIMEZONE",
+									"type": "Int64"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ParquetDS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SnowflakeTableDS",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"parameters": {

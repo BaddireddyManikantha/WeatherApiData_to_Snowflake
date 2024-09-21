@@ -1,0 +1,24 @@
+{
+	"name": "triggerAT3PM",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Weather_Snowflake_FL",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2024-09-21T15:10:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
