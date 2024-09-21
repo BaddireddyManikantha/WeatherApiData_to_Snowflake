@@ -1,0 +1,19 @@
+{
+	"name": "AzureDatabricksLS",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-4317593619875113.13.azuredatabricks.net",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVaultLS",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "databricks-acces-stokens"
+			},
+			"existingClusterId": "0912-060534-fpkax81v"
+		}
+	}
+}
