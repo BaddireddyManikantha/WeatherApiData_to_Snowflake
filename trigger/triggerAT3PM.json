@@ -8,6 +8,9 @@
 				"pipelineReference": {
 					"referenceName": "Weather_Snowflake_FL",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"cities": "kakinada"
 				}
 			}
 		],
