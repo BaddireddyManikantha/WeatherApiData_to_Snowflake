@@ -1,0 +1,32 @@
+{
+	"name": "triggerEveryMonth1or2or3",
+	"properties": {
+		"description": "will trigger 1st of every month if it is not a Saturday or Sunday\nif it is Saturday it will trigger on 3rd if it is Sunday it will trigger on 2nd.",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "interview problem",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 1,
+				"startTime": "2024-09-22T11:30:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"monthDays": [
+						21,
+						22,
+						23
+					]
+				}
+			}
+		}
+	}
+}

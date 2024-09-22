@@ -33,7 +33,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@and(greaterOrEquals(variables('weeknum'), 1), lessOrEquals(variables('weeknum'), 5))\n",
+						"value": "@and(greaterOrEquals(variables('weeknum'), 0), lessOrEquals(variables('weeknum'), 6))\n",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -55,7 +55,6 @@
 									"storeSettings": {
 										"type": "AzureBlobFSReadSettings",
 										"recursive": true,
-										"wildcardFileName": "*.json",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
