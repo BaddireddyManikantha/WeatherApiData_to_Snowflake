@@ -807,11 +807,17 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Day",
+						"frequency": "Month",
 						"interval": 1,
-						"startTime": "2024-09-22T11:45:00",
+						"startTime": "2024-09-22T11:55:00",
 						"timeZone": "India Standard Time",
-						"schedule": {}
+						"schedule": {
+							"monthDays": [
+								21,
+								22,
+								23
+							]
+						}
 					}
 				}
 			},
