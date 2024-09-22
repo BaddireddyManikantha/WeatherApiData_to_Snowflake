@@ -270,6 +270,166 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/JsonStaticDS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "kakinada",
+						"fileSystem": "stage"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/JsonSinkDS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "archive"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/interview problem')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "weeknum",
+							"value": {
+								"value": "@dayOfWeek(utcNow('yyyy-MM-dd'))",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "If Condition1",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@and(greaterOrEquals(variables('weeknum'), 0), lessOrEquals(variables('weeknum'), 6))\n",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "stage to archive",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "JsonSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "JsonReadSettings"
+											}
+										},
+										"sink": {
+											"type": "JsonSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "JsonWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "JsonStaticDS",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "JsonSinkDS",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"daynum": {
+						"type": "Integer"
+					},
+					"weeknum": {
+						"type": "Integer"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/JsonStaticDS')]",
+				"[concat(variables('factoryId'), '/datasets/JsonSinkDS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SnowflakeTableDS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -628,76 +788,41 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/testing')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/triggerEveryMonth1or2or3')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"description": "will trigger 1st of every month if it is not a Saturday or Sunday\nif it is Saturday it will trigger on 3rd if it is Sunday it will trigger on 2nd.",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
 					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"pipelineReference": {
+							"referenceName": "interview problem",
+							"type": "PipelineReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.parquet",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "ParquetReadSettings"
-								}
-							},
-							"sink": {
-								"type": "SnowflakeV2Sink",
-								"importSettings": {
-									"type": "SnowflakeImportCopyCommand"
-								}
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureBlobLS",
-									"type": "LinkedServiceReference"
-								},
-								"path": ""
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ParquetDS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SnowflakeTableDS",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"parameters": {}
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2024-09-22T11:30:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"monthDays": [
+								21,
+								22,
+								23
+							]
+						}
+					}
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ParquetDS')]",
-				"[concat(variables('factoryId'), '/datasets/SnowflakeTableDS')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobLS')]"
+				"[concat(variables('factoryId'), '/pipelines/interview problem')]"
 			]
 		},
 		{
