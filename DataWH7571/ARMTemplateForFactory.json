@@ -837,17 +837,11 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Month",
+						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2024-09-22T11:40:00",
+						"startTime": "2024-09-22T11:45:00",
 						"timeZone": "India Standard Time",
-						"schedule": {
-							"monthDays": [
-								21,
-								22,
-								23
-							]
-						}
+						"schedule": {}
 					}
 				}
 			},
